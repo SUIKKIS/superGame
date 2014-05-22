@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 
 public class awsumPeli extends ApplicationAdapter {
 
@@ -31,13 +32,11 @@ public class awsumPeli extends ApplicationAdapter {
 	public void create() {
 
 		// Load images textures for player, background and flying fireballs
-
 		backGround = new Texture("background.png");
 		texture_player = new Texture("player1.png");
 		fireBall = new Texture("laser.png");
 
 		// Load sound effect and background music
-
 		hitSound = Gdx.audio.newSound(Gdx.files.internal("hit.mp3"));
 		muzak = Gdx.audio.newMusic(Gdx.files.internal("dream.mp3"));
 
@@ -68,12 +67,24 @@ public class awsumPeli extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		// Updating camera position
-		
 		camera.update();
 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		batch.draw(texture_player, player.x, player.y);
 		batch.end();
+
+		// Touch
+
+		if (Gdx.input.isTouched()) {
+
+			Vector3 osoitin = new Vector3();
+			osoitin.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			camera.unproject(osoitin);
+			player.x = osoitin.x - 64 / 2;
+			player.y = osoitin.y - 64 / 2;
+
+		}
+
 	}
 }
