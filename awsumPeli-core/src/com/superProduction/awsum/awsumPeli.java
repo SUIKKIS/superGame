@@ -110,6 +110,7 @@ public class awsumPeli extends ApplicationAdapter {
 
 			Rectangle laser = iter.next();
 			laser.y -= 200 * Gdx.graphics.getDeltaTime();
+			
 			if (laser.y + 37 < 0)
 				iter.remove();
 			if(laser.overlaps(player)) {
